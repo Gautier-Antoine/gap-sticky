@@ -12,8 +12,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ edit)
 /* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
@@ -37,68 +37,74 @@ const {
 } = wp.element;
 const el = createElement;
 function edit(props) {
-  function removeHTML(str) {
-    var div = document.createElement("div");
-    div.innerHTML = str;
-    return div.textContent || div.innerText || "";
-  }
-
+  // function removeHTML(str) {
+  // 	let div = document.createElement("div");
+  // 	div.innerHTML = str;
+  // 	return div.textContent || div.innerText || "";
+  // }
   const {
     attributes: {
       numberPosts,
       text,
-      postType
+      postType,
+      isSticky
     },
     setAttributes
   } = props;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
     className: "has-" + postType
-  }); // ? https://stackoverflow.com/questions/71370680/how-can-i-make-a-dropdown-list-control-that-fetches-names-of-custom-posts-types
-
-  const postTypes = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.store).getPostTypes({
-    per_page: -1
-  }), []); // Options expects [{label: ..., value: ...}]
-
-  var postTypeOptions = !Array.isArray(postTypes) ? postTypes : postTypes.filter( // Filter out internal WP post types eg: wp_block, wp_navigation, wp_template, wp_template_part..
-  postType => postType.viewable == true).map( // Format the options for display in the <SelectControl/>
-  postType => ({
-    label: postType.labels.singular_name,
-    value: postType.slug // the value saved as postType in attributes
-
-  })); // !! POSTS
-
-  const posts = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
-    return select('core').getEntityRecords('postType', postType, {
-      per_page: numberPosts,
-      sticky: true
-    });
   });
 
+  // ? https://stackoverflow.com/questions/71370680/how-can-i-make-a-dropdown-list-control-that-fetches-names-of-custom-posts-types
+  const postTypes = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.store).getPostTypes({
+    per_page: -1
+  }), []);
+  let postTypeOptions = !Array.isArray(postTypes) ? postTypes : postTypes.filter(postType => postType.viewable == true).map(postType => ({
+    label: postType.labels.singular_name,
+    value: postType.slug
+  }));
+
+  // !! POSTS > Make reload is isSticky or numberPosts
+  let params = {
+    per_page: numberPosts
+  };
+  if (isSticky === true) {
+    params = {
+      ...params,
+      sticky: true
+    };
+  }
+  const posts = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
+    return select('core').getEntityRecords('postType', postType, params);
+  });
   if (posts != null && posts.length > 0) {
     // !! See design
     text.length = 0;
-    var list = [];
-    var block = [];
+    let list = [];
+    // let block = [];
     var counter = 0;
     posts.forEach(post => {
-      var block = [];
+      let block = [];
       counter++;
-      var excerpt = '';
-      var dateClass = '';
-
-      if (post.excerpt != null) {
+      let excerpt = 'empty excerpt';
+      let dateClass = '';
+      // if (post.content != null) {
+      // 	excerpt = post.content.rendered;
+      // 	excerpt = removeHTML(excerpt);
+      // 	excerpt = excerpt.slice(0,130);
+      // }
+      if (post.excerpt !== null) {
         excerpt = post.excerpt.rendered;
-      } else if (post.content != null) {
-        excerpt = post.content.rendered;
-        excerpt = removeHTML(excerpt);
-        excerpt = excerpt.slice(0, 130);
-      } else {
-        excerpt = 'empty content';
       }
-
       if (post.title.rendered != null && excerpt != null && post.link != null) {
-        var title = post.title.rendered ? post.title.rendered : 'Title';
-        var innerBlock = [el('h2', {}, title), createElement("p", {
+        let title = post.title.rendered ? post.title.rendered : 'Title';
+        let innerBlock = [
+        // el('h2', {}, title),
+        createElement("h2", {
+          dangerouslySetInnerHTML: {
+            __html: title
+          }
+        }), createElement("p", {
           dangerouslySetInnerHTML: {
             __html: excerpt
           }
@@ -107,15 +113,21 @@ function edit(props) {
           className: "content"
         }, innerBlock));
       }
-
       list.push(el('div', {
         className: "block" + dateClass
       }, block));
     });
-    text.push(list); // text.push(el('hr',{ style:{backgroundColor: "gray"}}));
+    text.push(list);
+    // text.push(el('hr',{ style:{backgroundColor: "gray"}}));
   }
-
-  return createElement(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
+  return createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ToggleControl, {
+    label: "Only Sticky posts?",
+    help: isSticky ? 'Displays only sticky post' : 'Displays all posts',
+    checked: isSticky,
+    onChange: value => setAttributes({
+      isSticky: value
+    })
+  })), createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
     label: "Select a Post Type",
     value: postType,
     options: postTypeOptions,
@@ -126,11 +138,13 @@ function edit(props) {
     label: "Number of Posts",
     value: numberPosts,
     onChange: value => setAttributes({
-      numberPosts: value
+      numberPosts: parseInt(value, 10)
     }),
     isShiftStepEnabled: true,
     shiftStep: 1
-  })))), createElement("div", blockProps, !posts && 'Loading...', posts && posts.length === 0 && 'No Posts', posts && posts.length > 0 && createElement("div", {
+  })))), createElement("div", {
+    ...blockProps
+  }, !posts && 'Loading...', posts && posts.length === 0 && 'No Posts', posts && posts.length > 0 && createElement("div", {
     class: "list-block posts-" + counter
   }, " ", text, " ")));
 }
@@ -175,11 +189,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ save)
 /* harmony export */ });
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-
+// import { __ } from '@wordpress/i18n';
+// import { useBlockProps } from '@wordpress/block-editor';
 
 function save() {
   return null;
@@ -208,6 +219,16 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
+
+/***/ }),
+
+/***/ "react":
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
+/***/ ((module) => {
+
+module.exports = window["React"];
 
 /***/ }),
 
@@ -261,16 +282,6 @@ module.exports = window["wp"]["data"];
 
 /***/ }),
 
-/***/ "@wordpress/element":
-/*!*********************************!*\
-  !*** external ["wp","element"] ***!
-  \*********************************/
-/***/ ((module) => {
-
-module.exports = window["wp"]["element"];
-
-/***/ }),
-
 /***/ "@wordpress/i18n":
 /*!******************************!*\
   !*** external ["wp","i18n"] ***!
@@ -287,7 +298,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"create-block/gap-sticky-posts","version":"0.1.0","title":"Gap Sticky Posts","category":"widgets","icon":"smiley","description":"Block for sticky posts.","supports":{"html":false},"textdomain":"gap-sticky-posts","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","attributes":{"numberPosts":{"type":"integer","default":"3"},"text":{"type":"array","default":[]},"postType":{"type":"string","default":"post"}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"create-block/gap-sticky-posts","version":"0.1.0","title":"Gap Sticky Posts","category":"widgets","icon":"smiley","description":"Block Loop for sticky posts.","supports":{"html":false},"textdomain":"gap-sticky-posts","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","attributes":{"numberPosts":{"type":"integer","default":"3"},"text":{"type":"array","default":[]},"postType":{"type":"string","default":"post"},"isSticky":{"type":"boolean","default":true}}}');
 
 /***/ })
 

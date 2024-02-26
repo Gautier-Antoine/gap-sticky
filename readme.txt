@@ -1,10 +1,8 @@
 === Gap Sticky Posts ===
-Contributors:      The WordPress Contributors
+Contributors:      Gautier-Antoine
 Tags:              block
 Tested up to:      5.9
-Stable tag:        0.1.0
-License:           GPL-2.0-or-later
-License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+Stable tag:        0.1.1
 
 Example block written with ESNext standard and JSX support – build step required.
 

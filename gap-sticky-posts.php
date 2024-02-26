@@ -1,13 +1,11 @@
 <?php
 /**
  * Plugin Name:       Gap Sticky Posts
- * Description:       Example block written with ESNext standard and JSX support – build step required.
+ * Description:       Block loop sticky posts or not
  * Requires at least: 5.8
  * Requires PHP:      7.0
- * Version:           0.1.0
- * Author:            The WordPress Contributors
- * License:           GPL-2.0-or-later
- * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Version:           0.1.1
+ * Author:            Gautier-Antoine
  * Text Domain:       gap-sticky-posts
  *
  * @package           create-block
@@ -76,22 +74,27 @@ function gautier_antoine_sticky_block_get_query($attributes) {
 
     $postType = $attributes['postType'];
     $numberPosts = $attributes['numberPosts'];
+    $isSticky = $attributes['isSticky'];
     // $classes = ( isset($attributes['className']) ) ? $attributes['className'] : ''; 
 
     $args = array(
         'post_type' => $postType,
         'posts_per_page' => $numberPosts,
         // ! 'offset' => $offsetPosts,
-        'post_status'           => array('publish'), // Also support: pending, draft, auto-draft, future, private, inherit, trash, any
-        'order'                 => 'DESC', // Also support: ASC
+        'post_status'           => array('publish'),
+        // Also support: pending, draft, auto-draft, future, private, inherit, trash, any
+        'order'                 => 'DESC',
+        // Also support: ASC
         'orderby'               => 'date',
 
     );
-	$sticky = get_option('sticky_posts');
-	if (!empty($sticky)) {
-		rsort($sticky);
-		$args['post__in'] = $sticky;
-	}
+    if ($isSticky) {
+        $sticky = get_option('sticky_posts');
+        if (!empty($sticky)) {
+            rsort($sticky);
+            $args['post__in'] = $sticky;
+        }
+    }
     return new WP_Query($args);
 }
 
@@ -101,5 +104,5 @@ function gautier_antoine_sticky_block_get_query($attributes) {
  * @return script
  */
 // function gautier_antoine_sticky_block_enqueue_method() {
-//     wp_enqueue_script('impact-block', plugin_dir_url(__FILE__) . 'inc/impact-block.js', array('jquery'), null, true );
+//    wp_enqueue_script('impact-block', plugin_dir_url(__FILE__) . 'inc/impact-block.js', array('jquery'), null, true );
 // }

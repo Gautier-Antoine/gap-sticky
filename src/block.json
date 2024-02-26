@@ -6,7 +6,7 @@
 	"title": "Gap Sticky Posts",
 	"category": "widgets",
 	"icon": "smiley",
-	"description": "Block for sticky posts.",
+	"description": "Block Loop for sticky posts.",
 	"supports": {
 		"html": false
 	},
@@ -26,6 +26,10 @@
 		  "postType": {
 			  "type": "string",
 			  "default": "post"
+		  },
+		  "isSticky": {
+			"type": "boolean",
+			"default": true
 		  }
 	}
 }
