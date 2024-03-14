@@ -16,8 +16,6 @@ import {
 
 import {
 	useSelect,
-	// useState,
-	// useEffect
 } from '@wordpress/data';
 import './editor.scss';
 
@@ -25,11 +23,6 @@ const {createElement} = wp.element;
 const el = createElement;
 export default function edit(props) {
 
-	// function removeHTML(str) {
-	// 	let div = document.createElement("div");
-	// 	div.innerHTML = str;
-	// 	return div.textContent || div.innerText || "";
-	// }
 	const {attributes: {numberPosts, text, postType, isSticky}, setAttributes} = props;
 
 	const blockProps = useBlockProps({className: "has-" + postType});
@@ -45,7 +38,7 @@ export default function edit(props) {
                 value: postType.slug,
 		}));
 		
-	// !! POSTS > Make reload is isSticky or numberPosts
+	// !! POSTS > Make reload if isSticky or numberPosts
 	let params = {per_page: numberPosts};
 	if (isSticky === true) {
 		params = {...params, sticky: true}
@@ -54,29 +47,21 @@ export default function edit(props) {
 		return select('core').getEntityRecords('postType', postType, params);
 	});
 	if (posts != null && posts.length > 0) {
-		// !! See design
 		text.length = 0;
 		let list = [];
-		// let block = [];
 		var counter = 0;
 
 		posts.forEach(post => {
 			let block = [];
 			counter++;
-			let excerpt = 'empty excerpt';
+			let excerpt = __('Empty excerpt', 'gap-sticky');
 			let dateClass = '';
-			// if (post.content != null) {
-			// 	excerpt = post.content.rendered;
-			// 	excerpt = removeHTML(excerpt);
-			// 	excerpt = excerpt.slice(0,130);
-			// }
 			if (post.excerpt !== null) {
 				excerpt = post.excerpt.rendered;
 			}
 			if (post.title.rendered != null && excerpt != null && post .link != null) {
-				let title = post.title.rendered ? post.title.rendered : 'Title';
+				let title = post.title.rendered ? post.title.rendered : __('The title', 'gap-sticky');
 				let innerBlock = [
-					// el('h2', {}, title),
 					<h2 dangerouslySetInnerHTML={ { __html: title } }></h2>,
 					<p dangerouslySetInnerHTML={ { __html: excerpt } }></p>,
 				];
@@ -88,7 +73,6 @@ export default function edit(props) {
 		});
 
 		text.push(list);
-		// text.push(el('hr',{ style:{backgroundColor: "gray"}}));
 	}
 	return (
 		<>
@@ -97,15 +81,15 @@ export default function edit(props) {
 				{/* https://developer.wordpress.org/block-editor/reference-guides/components/toggle-control/ */}
 					<PanelRow>
 						<ToggleControl
-							label="Only Sticky posts?"
-							help={isSticky ? 'Displays only sticky post' : 'Displays all posts'}
+							label={__('Only Sticky posts?', 'gap-sticky')}
+							help={isSticky ? __('Displays only sticky post', 'gap-sticky') : __('Displays all posts', 'gap-sticky')}
 							checked={isSticky}
 							onChange={(value) => setAttributes({ isSticky: value })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
-							label="Select a Post Type"
+							label={__('Select a Post Type', 'gap-sticky')}
 							value={postType}
 							options={postTypeOptions}
 							onChange={(value) => setAttributes({ postType: value })}
@@ -113,7 +97,7 @@ export default function edit(props) {
 					</PanelRow>
 					<PanelRow>
 						<NumberControl
-							label="Number of Posts"
+							label={__('Number of Posts', 'gap-sticky')}
 							value={numberPosts}
 							onChange={(value) => setAttributes({numberPosts: parseInt(value, 10)})}
 							isShiftStepEnabled={true}
@@ -123,10 +107,9 @@ export default function edit(props) {
                 </PanelBody>
             </InspectorControls>
 		<div {...blockProps}>
-				{! posts && 'Loading...'}
-				{posts && posts.length === 0 && 'No Posts'}
-				{posts && posts.length > 0 && <div class={"list-block posts-" + counter }> {text} </div>}
-				{/* { posts && posts.length > 0 && text } */}
+				{! posts && __('Loading...', 'gap-sticky')}
+				{posts && posts.length === 0 && __('No Posts', 'gap-sticky')}
+				{posts && posts.length > 0 && <div className={"list-block posts-" + counter }> {text} </div>}
 			</div>
         </>
 	);

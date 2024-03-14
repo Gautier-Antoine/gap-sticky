@@ -1,10 +1,10 @@
 /*!****************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/editor.scss ***!
   \****************************************************************************************************************************************************************************************************************************************/
-.wp-block-create-block-gap-sticky-posts {
+.wp-block-gap-sticky-posts {
   padding: 10px;
 }
-.wp-block-create-block-gap-sticky-posts .block {
+.wp-block-gap-sticky-posts .block {
   background-color: rgba(0, 0, 0, 0.3);
   padding: 0.1rem 2rem;
   margin-bottom: 0.5rem;

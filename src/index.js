@@ -4,11 +4,9 @@ import './style.scss';
 
 import edit from './edit';
 import save from './save';
-import json from './block.json';
+import metadata from './block.json';
 
-const { name } = json;
-
-registerBlockType( name, {
+registerBlockType( metadata.name, {
 	edit,
 	save,
 } );

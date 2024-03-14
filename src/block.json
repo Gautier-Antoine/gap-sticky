@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
-	"name": "create-block/gap-sticky-posts",
+	"name": "gap/sticky-posts",
 	"version": "0.1.0",
-	"title": "Gap Sticky Posts",
+	"title": "GAP > Sticky Posts",
 	"category": "widgets",
 	"icon": "smiley",
 	"description": "Block Loop for sticky posts.",

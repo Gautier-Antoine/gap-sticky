@@ -1,5 +1,40 @@
-.wp-block-create-block-gap-sticky-posts {
-	background-color: #21759b;
-	color: #fff;
-	padding: 2px;
+$wordpress-small-min: 782px;
+$wordpress-small-max: $wordpress-small-min - 1;
+
+.wp-block-cover {
+	&.post-call {
+		padding:0;
+		margin-bottom: 1rem;
+		box-shadow: 0px 0px 15px -5px var(--wp--preset--color--black);
+		.wp-block-cover__inner-container {
+			& > .wp-block-group {
+				opacity: 0;
+				padding: var(--wp--preset--spacing--50);
+				min-height: 430px;
+				float: left;
+				overflow: hidden;
+				box-shadow: 0 0 25px -5px var(--wp--preset--color--black);
+				// clip-path: inset(0 -15px 0 0);
+				background-color: rgba(255, 255, 255, 0.9) !important;
+				transition: transform 250ms, opacity 0.4s;
+				width: 100%;
+				transform: translateX(0px);
+				@media screen and (min-width: $wordpress-small-min) {
+					width: 50%;
+					transform: translateX(-40px);
+				}
+				.wp-block-buttons,
+				.wp-block-gap-stacks {
+					width: 100%;
+				}
+			}
+		}
+		&:hover .wp-block-group {
+			// display: block;
+			opacity: 1;
+			@media screen and (min-width: $wordpress-small-min) {
+			transform: translateX(0px);
+			}
+		}
+	}
 }
