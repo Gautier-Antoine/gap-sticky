@@ -20,10 +20,6 @@ import {
 } from '@wordpress/data';
 import './editor.scss';
 
-	// Add spinner : https://developer.wordpress.org/news/2023/05/19/useentityrecords-an-easier-way-to-fetch-wordpress-data/
-	// ! See support for (colors, etc) https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
-	// See proper reload/design
-
 const {createElement} = wp.element;
 const el = createElement;
 export default function edit(props) {
@@ -32,7 +28,6 @@ export default function edit(props) {
 
 	const blockProps = useBlockProps({className: "has-" + postType});
 	
-	// ? https://stackoverflow.com/questions/71370680/how-can-i-make-a-dropdown-list-control-that-fetches-names-of-custom-posts-types
     const postTypes = useSelect(
         (select) => select(coreStore).getPostTypes({ per_page: -1 }), []
     );
@@ -95,7 +90,6 @@ export default function edit(props) {
 		<>
             <InspectorControls>
                 <PanelBody>
-				{/* https://developer.wordpress.org/block-editor/reference-guides/components/toggle-control/ */}
 					<PanelRow>
 						<ToggleControl
 							label={__('Only Sticky posts?', 'gap-sticky')}
