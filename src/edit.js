@@ -7,6 +7,7 @@ import {
 
 import { store as coreStore } from '@wordpress/core-data';
 import {
+	Spinner,
 	PanelBody,
 	PanelRow,
 	SelectControl,
@@ -18,6 +19,10 @@ import {
 	useSelect,
 } from '@wordpress/data';
 import './editor.scss';
+
+	// Add spinner : https://developer.wordpress.org/news/2023/05/19/useentityrecords-an-easier-way-to-fetch-wordpress-data/
+	// ! See support for (colors, etc) https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
+	// See proper reload/design
 
 const {createElement} = wp.element;
 const el = createElement;
@@ -37,16 +42,19 @@ export default function edit(props) {
                 label: postType.labels.singular_name,
                 value: postType.slug,
 		}));
-		
-	// !! POSTS > Make reload if isSticky or numberPosts
 	let params = {per_page: numberPosts};
 	if (isSticky === true) {
 		params = {...params, sticky: true}
 	}
-	const posts = useSelect((select) => {
-		return select('core').getEntityRecords('postType', postType, params);
-	});
-	if (posts != null && posts.length > 0) {
+	const {hasResolved, posts} = useSelect( select => {
+		  return {
+			posts: select(coreStore).getEntityRecords('postType', postType, params),
+			hasResolved: select(coreStore).hasFinishedResolution('getEntityRecords', ['postType', postType, params])
+		  }
+		},
+		[postType, params]
+	);
+	if (hasResolved && posts != null && posts.length > 0) {
 		text.length = 0;
 		let list = [];
 		var counter = 0;
@@ -73,6 +81,15 @@ export default function edit(props) {
 		});
 
 		text.push(list);
+	}
+	function LoopPosts ({ hasResolved, posts }) {
+		if ( !hasResolved ) {
+			return <Spinner />;
+		}
+		if ( !posts?.length ) {
+			return <p>{ __('No Posts', 'gap-sticky') }</p>;
+		}
+		return <div className={"list-block posts-" + counter }> {text} </div>;
 	}
 	return (
 		<>
@@ -106,10 +123,8 @@ export default function edit(props) {
 					</PanelRow>
                 </PanelBody>
             </InspectorControls>
-		<div {...blockProps}>
-				{! posts && __('Loading...', 'gap-sticky')}
-				{posts && posts.length === 0 && __('No Posts', 'gap-sticky')}
-				{posts && posts.length > 0 && <div className={"list-block posts-" + counter }> {text} </div>}
+			<div {...blockProps}>
+				<LoopPosts hasResolved={ hasResolved } posts={ posts } />
 			</div>
         </>
 	);

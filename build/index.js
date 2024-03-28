@@ -32,6 +32,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+// Add spinner : https://developer.wordpress.org/news/2023/05/19/useentityrecords-an-easier-way-to-fetch-wordpress-data/
+// ! See support for (colors, etc) https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
+// See proper reload/design
+
 const {
   createElement
 } = wp.element;
@@ -58,8 +63,6 @@ function edit(props) {
     label: postType.labels.singular_name,
     value: postType.slug
   }));
-
-  // !! POSTS > Make reload if isSticky or numberPosts
   let params = {
     per_page: numberPosts
   };
@@ -69,10 +72,16 @@ function edit(props) {
       sticky: true
     };
   }
-  const posts = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
-    return select('core').getEntityRecords('postType', postType, params);
-  });
-  if (posts != null && posts.length > 0) {
+  const {
+    hasResolved,
+    posts
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useSelect)(select => {
+    return {
+      posts: select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.store).getEntityRecords('postType', postType, params),
+      hasResolved: select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.store).hasFinishedResolution('getEntityRecords', ['postType', postType, params])
+    };
+  }, [postType, params]);
+  if (hasResolved && posts != null && posts.length > 0) {
     text.length = 0;
     let list = [];
     var counter = 0;
@@ -105,6 +114,20 @@ function edit(props) {
     });
     text.push(list);
   }
+  function LoopPosts({
+    hasResolved,
+    posts
+  }) {
+    if (!hasResolved) {
+      return createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Spinner, null);
+    }
+    if (!posts?.length) {
+      return createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No Posts', 'gap-sticky'));
+    }
+    return createElement("div", {
+      className: "list-block posts-" + counter
+    }, " ", text, " ");
+  }
   return createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ToggleControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Only Sticky posts?', 'gap-sticky'),
     help: isSticky ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Displays only sticky post', 'gap-sticky') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Displays all posts', 'gap-sticky'),
@@ -129,9 +152,10 @@ function edit(props) {
     shiftStep: 1
   })))), createElement("div", {
     ...blockProps
-  }, !posts && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Loading...', 'gap-sticky'), posts && posts.length === 0 && (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No Posts', 'gap-sticky'), posts && posts.length > 0 && createElement("div", {
-    className: "list-block posts-" + counter
-  }, " ", text, " ")));
+  }, createElement(LoopPosts, {
+    hasResolved: hasResolved,
+    posts: posts
+  })));
 }
 
 /***/ }),
@@ -147,36 +171,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./save */ "./src/save.js");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./block.json */ "./src/block.json");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./block.json */ "./src/block.json");
 
 
 
 
-
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_4__.name, {
-  edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
-  save: _save__WEBPACK_IMPORTED_MODULE_3__["default"]
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_3__.name, {
+  edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
-
-/***/ }),
-
-/***/ "./src/save.js":
-/*!*********************!*\
-  !*** ./src/save.js ***!
-  \*********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ save)
-/* harmony export */ });
-// import { __ } from '@wordpress/i18n';
-// import { useBlockProps } from '@wordpress/block-editor';
-
-function save() {
-  return null;
-}
 
 /***/ }),
 
@@ -280,7 +282,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"gap/sticky-posts","version":"0.1.0","title":"GAP > Sticky Posts","category":"widgets","icon":"smiley","description":"Block Loop for sticky posts.","supports":{"html":false},"textdomain":"gap-sticky-posts","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","attributes":{"numberPosts":{"type":"integer","default":"3"},"text":{"type":"array","default":[]},"postType":{"type":"string","default":"post"},"isSticky":{"type":"boolean","default":true}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"gap/sticky-posts","version":"0.1.0","title":"GAP > Sticky Posts","category":"widgets","icon":"smiley","description":"Block Loop for sticky posts.","example":{},"attributes":{"numberPosts":{"type":"integer","default":"3"},"text":{"type":"array","default":[]},"postType":{"type":"string","default":"post"},"isSticky":{"type":"boolean","default":true}},"supports":{"html":false,"color":{"text":true}},"textdomain":"gap-sticky","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
 
 /***/ })
 

@@ -1,19 +1,20 @@
 {
 	"name": "gap-sticky-posts",
-	"version": "0.1.1",
-	"description": "Block loop sticky posts or not",
-	"author": "Gautier-Antoine",
+	"version": "0.1.0",
+	"description": "Posts",
+	"author": "The WordPress Contributors",
+	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
 	"scripts": {
-		"build": "wp-scripts build",
+		"build": "wp-scripts build --webpack-copy-php",
 		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
-		"start": "wp-scripts start"
+		"start": "wp-scripts start --webpack-copy-php"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^27.3.0"
+		"@wordpress/scripts": "^27.5.0"
 	}
 }
