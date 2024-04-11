@@ -62,13 +62,13 @@ export default function edit(props) {
 		posts.forEach(post => {
 			let block = [];
 			counter++;
-			let excerpt = __('Empty excerpt', 'gap-sticky');
+			let excerpt = __('Empty excerpt', 'gap-sticky-posts');
 			let dateClass = '';
 			if (post.excerpt !== null) {
 				excerpt = post.excerpt.rendered;
 			}
 			if (post.title.rendered != null && excerpt != null && post .link != null) {
-				let title = post.title.rendered ? post.title.rendered : __('The title', 'gap-sticky');
+				let title = post.title.rendered ? post.title.rendered : __('The title', 'gap-sticky-posts');
 				let innerBlock = [
 					<h2 dangerouslySetInnerHTML={ { __html: title } }></h2>,
 					<p dangerouslySetInnerHTML={ { __html: excerpt } }></p>,
@@ -87,7 +87,7 @@ export default function edit(props) {
 			return <Spinner />;
 		}
 		if ( !posts?.length ) {
-			return <p>{ __('No Posts', 'gap-sticky') }</p>;
+			return <p>{ __('No Posts', 'gap-sticky-posts') }</p>;
 		}
 		return <div className={"list-block posts-" + counter }> {text} </div>;
 	}
@@ -98,15 +98,15 @@ export default function edit(props) {
 				{/* https://developer.wordpress.org/block-editor/reference-guides/components/toggle-control/ */}
 					<PanelRow>
 						<ToggleControl
-							label={__('Only Sticky posts?', 'gap-sticky')}
-							help={isSticky ? __('Displays only sticky post', 'gap-sticky') : __('Displays all posts', 'gap-sticky')}
+							label={__('Only Sticky posts?', 'gap-sticky-posts')}
+							help={isSticky ? __('Displays only sticky post', 'gap-sticky-posts') : __('Displays all posts', 'gap-sticky-posts')}
 							checked={isSticky}
 							onChange={(value) => setAttributes({ isSticky: value })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<SelectControl
-							label={__('Select a Post Type', 'gap-sticky')}
+							label={__('Select a Post Type', 'gap-sticky-posts')}
 							value={postType}
 							options={postTypeOptions}
 							onChange={(value) => setAttributes({ postType: value })}
@@ -114,7 +114,7 @@ export default function edit(props) {
 					</PanelRow>
 					<PanelRow>
 						<NumberControl
-							label={__('Number of Posts', 'gap-sticky')}
+							label={__('Number of Posts', 'gap-sticky-posts')}
 							value={numberPosts}
 							onChange={(value) => setAttributes({numberPosts: parseInt(value, 10)})}
 							isShiftStepEnabled={true}

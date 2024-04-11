@@ -6,7 +6,7 @@
   "title": "GAP > Sticky Posts",
   "category": "widgets",
   "icon": "smiley",
-  "description": "Block Loop for sticky posts.",
+  "description": "Block Loop for sticky posts",
   "example": {},
   "attributes": {
     "numberPosts": {
@@ -40,8 +40,11 @@
       "text": true
     }
   },
-  "textdomain": "gap-sticky",
-  "editorScript": "file:./index.js",
+  "textdomain": "gap-sticky-posts",
+  "editorScript": [
+    "file:./index.js",
+    "gap-sticky-posts-script"
+  ],
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",
   "render": "file:./render.php",

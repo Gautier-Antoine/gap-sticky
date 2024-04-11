@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       GAP > Sticky Posts
- * Description:       Block Loop for sticky posts.
+ * Description:       Block Loop for sticky posts
  * Requires at least: 6.1
  * Requires PHP:      7.0
  * Version:           0.1.0
@@ -28,6 +28,18 @@ if (!defined('ABSPATH')) {
  */
 function gap_sticky_posts_gap_sticky_posts_block_init()
 {
+    wp_register_script(
+		'gap-sticky-posts-script',
+		plugins_url('block.js', __FILE__),
+		array( 'wp-blocks', 'react', 'wp-i18n', 'wp-block-editor' )
+	);
+
+    wp_set_script_translations(
+        'gap-sticky-posts-script',
+        'gap-sticky-posts',
+        plugin_dir_path(__FILE__) . 'languages'
+	);
 	register_block_type(__DIR__ . '/build');
+
 }
 add_action('init', 'gap_sticky_posts_gap_sticky_posts_block_init');

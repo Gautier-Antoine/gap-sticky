@@ -88,13 +88,13 @@ function edit(props) {
     posts.forEach(post => {
       let block = [];
       counter++;
-      let excerpt = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Empty excerpt', 'gap-sticky');
+      let excerpt = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Empty excerpt', 'gap-sticky-posts');
       let dateClass = '';
       if (post.excerpt !== null) {
         excerpt = post.excerpt.rendered;
       }
       if (post.title.rendered != null && excerpt != null && post.link != null) {
-        let title = post.title.rendered ? post.title.rendered : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('The title', 'gap-sticky');
+        let title = post.title.rendered ? post.title.rendered : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('The title', 'gap-sticky-posts');
         let innerBlock = [createElement("h2", {
           dangerouslySetInnerHTML: {
             __html: title
@@ -122,28 +122,28 @@ function edit(props) {
       return createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Spinner, null);
     }
     if (!posts?.length) {
-      return createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No Posts', 'gap-sticky'));
+      return createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('No Posts', 'gap-sticky-posts'));
     }
     return createElement("div", {
       className: "list-block posts-" + counter
     }, " ", text, " ");
   }
   return createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ToggleControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Only Sticky posts?', 'gap-sticky'),
-    help: isSticky ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Displays only sticky post', 'gap-sticky') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Displays all posts', 'gap-sticky'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Only Sticky posts?', 'gap-sticky-posts'),
+    help: isSticky ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Displays only sticky post', 'gap-sticky-posts') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Displays all posts', 'gap-sticky-posts'),
     checked: isSticky,
     onChange: value => setAttributes({
       isSticky: value
     })
   })), createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select a Post Type', 'gap-sticky'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select a Post Type', 'gap-sticky-posts'),
     value: postType,
     options: postTypeOptions,
     onChange: value => setAttributes({
       postType: value
     })
   })), createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelRow, null, createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.__experimentalNumberControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Number of Posts', 'gap-sticky'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Number of Posts', 'gap-sticky-posts'),
     value: numberPosts,
     onChange: value => setAttributes({
       numberPosts: parseInt(value, 10)
@@ -282,7 +282,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"gap/sticky-posts","version":"0.1.0","title":"GAP > Sticky Posts","category":"widgets","icon":"smiley","description":"Block Loop for sticky posts.","example":{},"attributes":{"numberPosts":{"type":"integer","default":"3"},"text":{"type":"array","default":[]},"postType":{"type":"string","default":"post"},"isSticky":{"type":"boolean","default":true},"style":{"type":"object","default":{"color":{"text":"gat-black"}}}},"supports":{"html":false,"color":{"text":true}},"textdomain":"gap-sticky","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"gap/sticky-posts","version":"0.1.0","title":"GAP > Sticky Posts","category":"widgets","icon":"smiley","description":"Block Loop for sticky posts","example":{},"attributes":{"numberPosts":{"type":"integer","default":"3"},"text":{"type":"array","default":[]},"postType":{"type":"string","default":"post"},"isSticky":{"type":"boolean","default":true},"style":{"type":"object","default":{"color":{"text":"gat-black"}}}},"supports":{"html":false,"color":{"text":true}},"textdomain":"gap-sticky-posts","editorScript":["file:./index.js","gap-sticky-posts-script"],"editorStyle":"file:./index.css","style":"file:./style-index.css","render":"file:./render.php","viewScript":"file:./view.js"}');
 
 /***/ })
 
