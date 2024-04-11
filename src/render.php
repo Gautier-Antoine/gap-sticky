@@ -29,8 +29,8 @@ $query = new WP_Query($args);
 // ob_start();
 // gap_sticky_html($query, $attributes);
 // return ob_get_clean();
+// var_dump(get_block_wrapper_attributes());
 ?>
-
 <div <?php echo get_block_wrapper_attributes(); ?>>
 <?php
 while ($query->have_posts()) : $query->the_post();

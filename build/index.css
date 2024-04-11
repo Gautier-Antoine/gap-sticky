@@ -1,1 +1,16 @@
-.wp-block-gap-sticky-posts{align-items:center;display:flex;justify-content:center;padding:10px}.wp-block-gap-sticky-posts .block{background-color:rgba(0,0,0,.3);margin-bottom:.5rem;padding:.1rem 2rem}
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/editor.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+.wp-block-gap-sticky-posts {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wp-block-gap-sticky-posts .block {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0.1rem 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/*# sourceMappingURL=index.css.map*/

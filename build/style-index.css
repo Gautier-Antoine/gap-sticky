@@ -1,1 +1,39 @@
-.wp-block-cover.post-call{box-shadow:0 0 15px -5px var(--wp--preset--color--black);margin-bottom:1rem;padding:0}.wp-block-cover.post-call .wp-block-cover__inner-container>.wp-block-group{background-color:hsla(0,0%,100%,.9)!important;box-shadow:0 0 25px -5px var(--wp--preset--color--black);float:left;min-height:430px;opacity:0;overflow:hidden;padding:var(--wp--preset--spacing--50);transform:translateX(0);transition:transform .25s,opacity .4s;width:100%}@media screen and (min-width:782px){.wp-block-cover.post-call .wp-block-cover__inner-container>.wp-block-group{transform:translateX(-40px);width:50%}}.wp-block-cover.post-call .wp-block-cover__inner-container>.wp-block-group .wp-block-buttons,.wp-block-cover.post-call .wp-block-cover__inner-container>.wp-block-group .wp-block-gap-stacks{width:100%}.wp-block-cover.post-call:hover .wp-block-group{opacity:1}@media screen and (min-width:782px){.wp-block-cover.post-call:hover .wp-block-group{transform:translateX(0)}}
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/style.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+.wp-block-cover.post-call {
+  padding: 0;
+  margin-bottom: 1rem;
+  box-shadow: 0px 0px 15px -5px var(--wp--preset--color--black);
+}
+.wp-block-cover.post-call .wp-block-cover__inner-container > .wp-block-group {
+  opacity: 0;
+  padding: var(--wp--preset--spacing--50);
+  min-height: 430px;
+  float: left;
+  overflow: hidden;
+  box-shadow: 0 0 25px -5px var(--wp--preset--color--black);
+  transition: transform 250ms, opacity 0.4s;
+  width: 100%;
+  transform: translateX(0px);
+}
+@media screen and (min-width: 782px) {
+  .wp-block-cover.post-call .wp-block-cover__inner-container > .wp-block-group {
+    width: 50%;
+    transform: translateX(-40px);
+  }
+}
+.wp-block-cover.post-call .wp-block-cover__inner-container > .wp-block-group .wp-block-buttons,
+.wp-block-cover.post-call .wp-block-cover__inner-container > .wp-block-group .wp-block-gap-stacks {
+  width: 100%;
+}
+.wp-block-cover.post-call:hover .wp-block-group {
+  opacity: 1;
+}
+@media screen and (min-width: 782px) {
+  .wp-block-cover.post-call:hover .wp-block-group {
+    transform: translateX(0px);
+  }
+}
+
+/*# sourceMappingURL=style-index.css.map*/

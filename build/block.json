@@ -24,6 +24,14 @@
     "isSticky": {
       "type": "boolean",
       "default": true
+    },
+    "style": {
+      "type": "object",
+      "default": {
+        "color": {
+          "text": "gat-black"
+        }
+      }
     }
   },
   "supports": {
