@@ -44,6 +44,5 @@
 	"editorScript": ["file:./index.js", "gap-sticky-posts-script"],
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"render": "file:./render.php",
-	"viewScript": "file:./view.js"
+	"render": "file:./render.php"
 }
