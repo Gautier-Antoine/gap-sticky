@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "gap/sticky-posts",
+	"version": "0.1.0",
+	"title": "GAP > Sticky Posts",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "Block Loop for sticky posts",
+	"example": {},
+	"attributes": {
+		"numberPosts": {
+			"type": "integer",
+			"default": "3"
+		  },
+		  "text": {
+			"type": "array",
+			"default": []
+		  },
+		  "postType": {
+			  "type": "string",
+			  "default": "post"
+		  },
+		  "isSticky": {
+			"type": "boolean",
+			"default": true
+		  },
+		  "style" : {
+			"type": "object",
+			"default": {
+				"color": {
+					"text": "gat-black"
+				}
+			}
+		  }
+	},
+	"supports": {
+		"html": false,
+		"color": {
+			"text": true
+		}
+	},
+	"textdomain": "gap-sticky-posts",
+	"editorScript": ["file:./index.js", "gap-sticky-posts-script"],
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

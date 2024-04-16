@@ -1,0 +1,13 @@
+.wp-block-gap-sticky-posts {
+	// border: 1px dotted #f00;
+	// background-color: rgba(0,0,0,0.5);
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	.block {
+		background-color: rgba(0,0,0,0.3);
+		padding: .1rem 2rem;
+		margin-bottom: .5rem;
+	}
+}
