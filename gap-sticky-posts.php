@@ -30,7 +30,7 @@ function gap_sticky_posts_gap_sticky_posts_block_init()
 {
     wp_register_script(
 		'gap-sticky-posts-script',
-		plugins_url('inc/load.js', __FILE__),
+		plugins_url('includes/load.js', __FILE__),
 		array( 'wp-blocks', 'react', 'wp-i18n', 'wp-block-editor' )
 	);
 
