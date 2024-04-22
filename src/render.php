@@ -2,12 +2,9 @@
 	// ! GET ATTRIBUTES
 	// var_dump($attributes);
 	// $query = gap_sticky_query($attributes);
-	if (isset($attributes)) {
-		$postType = (isset($attributes['postType'])) ? $attributes['postType'] : 'post';
-		$numberPosts = (isset($attributes['numberPosts'])) ? $attributes['numberPosts'] : '3';
-		$isSticky = (isset($attributes['isSticky'])) ? $attributes['isSticky'] : true;
-	}
-
+	$postType = (isset($attributes['postType'])) ? $attributes['postType'] : 'post';
+	$numberPosts = (isset($attributes['numberPosts'])) ? $attributes['numberPosts'] : '3';
+	$isSticky = (isset($attributes['isSticky'])) ? $attributes['isSticky'] : true;
 	$args = array(
 		'post_type' => $postType,
 		'posts_per_page' => $numberPosts,
