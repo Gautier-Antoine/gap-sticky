@@ -1,10 +1,10 @@
 <?php
-	if (isset($attributes)) {
-		$postType = (isset($attributes['postType'])) ? $attributes['postType'] : 'post';
-		$numberPosts = (isset($attributes['numberPosts'])) ? $attributes['numberPosts'] : '3';
-		$isSticky = (isset($attributes['isSticky'])) ? $attributes['isSticky'] : true;
-	}
-
+	// ! GET ATTRIBUTES
+	// var_dump($attributes);
+	// $query = gap_sticky_query($attributes);
+	$postType = (isset($attributes['postType'])) ? $attributes['postType'] : 'post';
+	$numberPosts = (isset($attributes['numberPosts'])) ? $attributes['numberPosts'] : '3';
+	$isSticky = (isset($attributes['isSticky'])) ? $attributes['isSticky'] : true;
 	$args = array(
 		'post_type' => $postType,
 		'posts_per_page' => $numberPosts,
@@ -21,6 +21,11 @@
 		}
 	}
 	$query = new WP_Query($args);
+
+	// ob_start();
+	// gap_sticky_html($query, $attributes);
+	// return ob_get_clean();
+	// var_dump(get_block_wrapper_attributes());
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
 <?php
